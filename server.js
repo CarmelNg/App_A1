@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/movies', (req, res) => {
   if(Object.keys(req.body).length === 0) {
-    res.status(500).json({ error: "Invalid number "});
+    res.status(500).json({ error: "Invalid"});
   } else {
     db.addNewMovie(req.body).then((data) => { res.status(201).json(data)
     }).catch((err) => { res.status(500).json({ error: err }); });
@@ -43,7 +43,7 @@ app.post('/api/movies', (req, res) => {
 
 app.get('/api/movies', (req, res) => {
     db.getAllMovies(req.query.page, req.query.perPage, req.query.title).then((data) => {
-      if (data.length === 0) res.status(204).json({ message: "No data returned"}); 
+      if (data.length === 0) res.status(204).json({ message: "No data"}); 
       else res.status(201).json(data); 
     }).catch((err) => {
       res.status(500).json({ error: err });  
@@ -62,10 +62,10 @@ app.get('/api/movies/:_id', (req, res) => {
 app.put('/api/movie/:_id', async (req, res) => {
   try {
     if (Object.keys(req.body).length === 0) {
-      return res.status(500).json({ error: "No data to update"});
+      return res.status(500).json({ error: "Nothing to update"});
     }
     const data = await db.updateMovieById(req.body, req.params._id);
-    res.json({ success: "Movie updated!"});
+    res.json({ success: "updated!"});
   }catch(err) {
     res.status(500).json({ error: err.message });
   }
